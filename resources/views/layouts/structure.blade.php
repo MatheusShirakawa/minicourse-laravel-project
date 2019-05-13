@@ -80,11 +80,12 @@
   <!-- /#wrapper -->
 
   <!-- Bootstrap core JavaScript -->
-  <script src="jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  {{-- <script src="jquery.min.js"></script> --}}
+  {{-- <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
 
   <!-- Menu Toggle Script -->
-  jquery.min.js
+  <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+  
   <script>
     $("#menu-toggle").click(function(e) {
       e.preventDefault();
