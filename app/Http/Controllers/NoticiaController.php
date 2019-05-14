@@ -25,7 +25,7 @@ class NoticiaController extends Controller
     {
         $noticias =  Noticia::all();
 
-        return view('pages.noticias')->with('noticias', $noticias);
+        return view('pages.news')->with('noticias', $noticias);
     }
 
     /**
@@ -35,7 +35,7 @@ class NoticiaController extends Controller
      */
     public function create()
     {
-        return view('pages.create_noticia');
+        return view('pages.create_news');
     }
 
     /**
@@ -126,6 +126,10 @@ class NoticiaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $noticia = Noticia::find($id);
+        $noticia->delete();
+
+        Session::flash('message', 'Cadastro deletado com sucesso!');
+        return Redirect::to('news');
     }
 }

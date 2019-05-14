@@ -27,12 +27,12 @@
     <div class="bg-light border-right" id="sidebar-wrapper">
       <div class="sidebar-heading">Start Bootstrap </div>
       <div class="list-group list-group-flush">
-        <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+        <a href="{{ route('home') }}" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+        <a href="{{ url('/news') }}" class="list-group-item list-group-item-action bg-light">Noticias</a>
+        <a href="{{ url('/categories') }}" class="list-group-item list-group-item-action bg-light">Categorias</a>
+        {{-- <a href="#" class="list-group-item list-group-item-action bg-light">Events</a> --}}
+        {{-- <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a> --}}
+        <a href="#" class="list-group-item list-group-item-action bg-light">Meu Perfil</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
