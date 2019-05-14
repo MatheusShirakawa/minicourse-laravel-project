@@ -43,3 +43,7 @@ Route::delete('/news/delete/{id}', 'NoticiaController@destroy');
 
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

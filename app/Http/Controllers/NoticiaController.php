@@ -103,7 +103,8 @@ class NoticiaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $noticia = Noticia::find($id);
+        return view('page.create_news')->with('noticia', $noticia);
     }
 
     /**
