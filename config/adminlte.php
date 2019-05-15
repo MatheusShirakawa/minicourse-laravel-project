@@ -115,6 +115,28 @@ return [
             'can'  => 'manage-blog',
         ],
         [
+            'text' => 'Noticias',
+            'url'  => 'news/',
+            'icon' => 'newspaper-o',
+            'submenu' => [
+                [
+                'text' => 'Cadastrar nova noticia',
+                'url'  => 'news/create/',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Categorias',
+            'url'  => '/categories',
+            'icon' => 'tags',
+            'submenu' => [
+                [
+                'text' => 'Cadastrar nova categoria',
+                'url'  => 'category/create/',
+                ],
+            ],
+        ],
+        [
             'text'        => 'Pages',
             'url'         => 'admin/pages',
             'icon'        => 'file',

@@ -21,22 +21,22 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 // Categories Routes
-Route::get('/categories','CategoriaController@index');
-Route::get('/categorie/create','CategoriaController@create');
-Route::get('/categorie/show/{id}','CategoriaController@show');
-Route::post('/categorie/store/{id}','CategoriaController@store');
-Route::post('/categorie/update/{id}','CategoriaController@update');
-Route::delete('/categorie/delete/{id}','CategoriaController@destroy');
+Route::get('/categories','CategoryController@index');
+Route::get('/category/create','CategoryController@create');
+Route::get('/category/edit/{id}','CategoryController@edit');
+Route::post('/category/store/','CategoryController@store');
+Route::put('/category/update/{id}','CategoryController@update');
+Route::get('/category/delete/{id}','CategoryController@destroy');
 
 
 //News Routes
 
-Route::get('/news', 'NoticiaController@index');
-Route::get('/news/create', 'NoticiaController@create');
-Route::get('/news/show/{id}', 'NoticiaController@show');
-Route::post('/news/store/{id}', 'NoticiaController@store');
-Route::post('/news/update/{id}', 'NoticiaController@update');
-Route::delete('/news/delete/{id}', 'NoticiaController@destroy');
+Route::get('/news', 'NewsController@index');
+Route::get('/news/create', 'NewsController@create');
+Route::get('/news/edit/{id}', 'NewsController@edit');
+Route::post('/news/store/', 'NewsController@store');
+Route::put('/news/update/{id}', 'NewsController@update');
+Route::get('/news/delete/{id}', 'NewsController@destroy');
 
 
 

@@ -11,10 +11,11 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\Helper;
 use Carbon\Carbon;
-use Noticia;
+use App\News;
+use App\Category;
 
 
-class NoticiaController extends Controller
+class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,9 +24,9 @@ class NoticiaController extends Controller
      */
     public function index()
     {
-        $noticias =  Noticia::all();
+        $news =  News::all();
 
-        return view('pages.news')->with('noticias', $noticias);
+        return view('pages.news')->with('news', $news);
     }
 
     /**
@@ -35,7 +36,11 @@ class NoticiaController extends Controller
      */
     public function create()
     {
-        return view('pages.create_news');
+        $categories = Category::all();
+
+       
+
+        return view('forms.create_news')->with('categories' , $categories);
     }
 
     /**
@@ -46,24 +51,24 @@ class NoticiaController extends Controller
      */
     public function store(Request $request)
     {
-        $noticia = new Noticia();
+        $news = new News();
 
-         if($request->image != null){
+         if($request->get('image') != null){
             $nameFile = null;
         }else{
-            $nameFile = $noticia->image;
+            $nameFile = $news->image;
         }
 
         // Verifica se informou o arquivo e se é válido
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             // Define um aleatório para o arquivo baseado no timestamps atual
             $name = uniqid(date('HisYmd'));
             // Recupera a extensão do arquivo
-            $extension = $request->image->extension();
+            $extension = $request->get('image')->extension();
             // Define finalmente o nome
             $nameFile = "{$name}.{$extension}";
             // Faz o upload:
-            $upload = $request->image->storeAs('users', $nameFile);
+            $upload = $request->get('image')->storeAs('users', $nameFile);
             // Se tiver funcionado o arquivo foi armazenado em storage/app/public/categories/nomedinamicoarquivo.extensao
             // Verifica se NÃO deu certo o upload (Redireciona de volta)
             if ( !$upload )
@@ -73,12 +78,13 @@ class NoticiaController extends Controller
                     ->withInput();
         }
 
-        $noticia->titulo    = $request->get('titulo');
-        $noticia->subtitulo = $request->get('subtitulo');
-        $noticia->descricao = $request->get('descricao');
-        $noticia->image     = $request->get('image');
+        $news->category_id = $request->get('category_id');
+        $news->title       = $request->get('title');
+        $news->subtitle    = $request->get('subtitle');
+        $news->description = $request->get('description');
+        $news->image       = $request->get('image');
 
-        $noticia->save();
+        $news->save();
 
         Session::flash('message', 'Cadastro registrado com sucesso!');
         return Redirect::to('news');
@@ -92,7 +98,7 @@ class NoticiaController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -103,8 +109,11 @@ class NoticiaController extends Controller
      */
     public function edit($id)
     {
-        $noticia = Noticia::find($id);
-        return view('page.create_news')->with('noticia', $noticia);
+        $news = News::find($id);
+        $categories = Category::all();
+
+        return view('forms.create_news')->with('news', $news)
+                                        ->with('categories', $categories);
     }
 
     /**
@@ -127,8 +136,8 @@ class NoticiaController extends Controller
      */
     public function destroy($id)
     {
-        $noticia = Noticia::find($id);
-        $noticia->delete();
+        $news = News::find($id);
+        $news->delete();
 
         Session::flash('message', 'Cadastro deletado com sucesso!');
         return Redirect::to('news');

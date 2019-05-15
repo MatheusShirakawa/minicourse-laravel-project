@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\Helper;
 use Carbon\Carbon;
-use Categoria;
+use App\Category;
 
-class CategoriaController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,7 +22,7 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categories = Categoria::all();
+        $categories = Category::all();
 
         return view('pages.categories')->with('categories', $categories);
     }
@@ -34,7 +34,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        return view('pages.create_category');
+        return view('forms.create_category');
     }
 
     /**
@@ -45,10 +45,10 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        $category = new Categoria();
+        $category = new Category();
 
-        $category->titulo    = $request->get('titulo');
-        $category->descricao = $request->get('descricao');
+        $category->title       = $request->get('title');
+        $category->description = $request->get('description');
         $category->save();
 
         Session::flash('message', 'Cadastro registrado com sucesso!');
@@ -63,9 +63,7 @@ class CategoriaController extends Controller
      */
     public function show($id)
     {
-        $category = Categoria::find($id);
-
-        return view('page.edit_category')->with($category, 'category');
+      
 
     }
 
@@ -77,7 +75,9 @@ class CategoriaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::find($id);
+
+        return view('forms.create_category')->with('category', $category);
     }
 
     /**
@@ -88,8 +88,16 @@ class CategoriaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {   
+
+        $category = Category::find($id);
+
+        $category->title       = $request->get('title');
+        $category->description = $request->get('description');
+        $category->save();
+
+        Session::flash('message', 'Cadastro atualizado com sucesso!');
+        return Redirect::to('categories');
     }
 
     /**
@@ -100,6 +108,10 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+        $category->delete();
+
+        Session::flash('message', 'Cadastro deletado com sucesso!');
+        return Redirect::to('categories');
     }
 }
