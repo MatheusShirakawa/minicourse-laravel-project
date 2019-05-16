@@ -10,7 +10,15 @@
 
 <div class="container">
 	<div class="row">
-	    <p>Cadastrar Nova Categoria</p>
+		<a class="btn btn-info" href="{{ url('/categories') }}">Voltar para listagem</a>
+		<br/>
+		<br/>
+
+	    @if(!isset($category))
+	    	<p>Cadastrar Nova Categoria</p>
+	    @else
+	    	<p>Editar Categoria</p>
+	    @endif
 
 	    <form class="input-group form col-lg-10" method="post" @if(isset($category)) action="{{ url('/category/update/'.$category->id) }}" @else action="{{ url('/category/store') }}" @endif>
 	    	@if(isset($category))<input name="_method" type="hidden" value="PUT">@endif
@@ -26,7 +34,7 @@
 	    	<div class="form-group">
 		    	<label>
 		    		Descricao
-		    		<textarea class="form-control" required name="description">{{ old('description') ? old('description') : isset($category) ? $category->description : "" }}</textarea>
+		    		<textarea cols="40" rows="5" class="form-control" required name="description">{{ old('description') ? old('description') : isset($category) ? $category->description : "" }}</textarea>
 		    	</label>
 	    	</div>
 

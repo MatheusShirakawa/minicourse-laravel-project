@@ -53,37 +53,24 @@ class NewsController extends Controller
     {
         $news = new News();
 
-         if($request->get('image') != null){
-            $nameFile = null;
-        }else{
-            $nameFile = $news->image;
-        }
+        if($request->file('image') != null){
 
-        // Verifica se informou o arquivo e se é válido
-         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            // Define um aleatório para o arquivo baseado no timestamps atual
             $name = uniqid(date('HisYmd'));
-            // Recupera a extensão do arquivo
-            $extension = $request->get('image')->extension();
-            // Define finalmente o nome
+            $extension = $request->file('image')->extension();
             $nameFile = "{$name}.{$extension}";
-            // Faz o upload:
-            $upload = $request->get('image')->storeAs('users', $nameFile);
-            // Se tiver funcionado o arquivo foi armazenado em storage/app/public/categories/nomedinamicoarquivo.extensao
-            // Verifica se NÃO deu certo o upload (Redireciona de volta)
-            if ( !$upload )
-                return redirect()
-                    ->back()
-                    ->with('error', 'Falha ao fazer upload')
-                    ->withInput();
+
+            $image = $request->file('image')->storeAs('images', $nameFile);
+
+        }else{
+            $image = '';
         }
 
         $news->category_id = $request->get('category_id');
         $news->title       = $request->get('title');
         $news->subtitle    = $request->get('subtitle');
         $news->description = $request->get('description');
-        $news->image       = $request->get('image');
-
+        $news->image       = $image;
+        
         $news->save();
 
         Session::flash('message', 'Cadastro registrado com sucesso!');
@@ -125,7 +112,30 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $news = News::find($id);
+
+        if($request->file('image') != null){
+
+            $name = uniqid(date('HisYmd'));
+            $extension = $request->file('image')->extension();
+            $nameFile = "{$name}.{$extension}";
+
+            $image = $request->file('image')->storeAs('images', $nameFile);
+
+        }else{
+            $image = '';
+        }
+
+        $news->category_id = $request->get('category_id');
+        $news->title       = $request->get('title');
+        $news->subtitle    = $request->get('subtitle');
+        $news->description = $request->get('description');
+        $news->image       = $image;
+        
+        $news->save();
+
+        Session::flash('message', 'Cadastro atualizado com sucesso!');
+        return Redirect::to('news');
     }
 
     /**

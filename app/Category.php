@@ -8,6 +8,6 @@ class Category extends Model
 {
     public function news()
     {
-    	return $this->hasMany('App\Noticia');
+    	return $this->hasMany('App\News');
     }
 }
